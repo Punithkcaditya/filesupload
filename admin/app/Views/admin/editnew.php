@@ -50,11 +50,20 @@
                                                             <input type="email" class="form-control" name="email" id="email" placeholder="Enter Email Address" value="<?= !empty($query[0]->email) ? $query[0]->email : '' ?>" required>
                                                         </div>
 
-                                                        <div class="form-group">
-                                        <label class="form-label">Enter User Name - PAN No</label>
-                                        <input type="text" class="form-control" name="user_name" id="user_name"
-                                            placeholder="Enter User Name - PAN No" value="<?= !empty($query[0]->user_name) ? $query[0]->user_name : '' ?>" required>
-                                    </div>
+                                                    <div class="form-group">
+                                                    <label class="form-label">Enter User Name - PAN No</label>
+                                                    <input type="text" class="form-control" name="user_name" id="user_name"
+                                                    placeholder="Enter User Name - PAN No" value="<?= !empty($query[0]->user_name) ? $query[0]->user_name : '' ?>" required>
+                                                    </div>
+
+                                                    <div class="form-group">
+                                                    <label class="form-label">Access</label>
+                                                    <select name="access" id="access" class="form-control" data-validation="required" required>
+                                                    <option value="">-- User Access --</option>
+                                                    <option value="1" <?php echo (!empty($query[0]->access) && $query[0]->access == 1) ? 'selected' : '' ?>>Enabled</option>
+                                                    <option value="0" <?php echo (empty($query[0]->access) ) ? 'selected' : '' ?>>Disabled</option>
+                                                    </select>
+                                                    </div>
                                                     </div>
                                                     <div class="col-md-12" style="text-align: center;">
                                                         <div class="d-grid gap-1">

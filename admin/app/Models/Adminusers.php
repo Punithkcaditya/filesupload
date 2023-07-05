@@ -15,7 +15,7 @@ class Adminusers extends Model
     protected $returnType       = 'array';
     protected $useSoftDeletes   = false;
     protected $protectFields    = true;
-    protected $allowedFields    = ['employee_id' , 'first_name', 'username', 'user_session_id', 'profile_pic', 'customer_location_id', 'is_type', 'last_active', 'login_token', 'modified_by' , 'modified_date',  'last_name', 'phone_number', 'role_id' , 'status_ind' , 'created_by', 'user_name', 'created_date', 'email', 'password'];
+    protected $allowedFields    = ['employee_id' , 'first_name', 'username', 'user_session_id', 'profile_pic', 'customer_location_id', 'is_type', 'last_active', 'login_token', 'modified_by' , 'modified_date', 'access', 'last_name', 'phone_number', 'role_id' , 'status_ind' , 'created_by', 'user_name', 'created_date', 'email', 'password'];
 
     // Dates
     protected $useTimestamps = false;
@@ -53,7 +53,7 @@ class Adminusers extends Model
     }
     public $data;
     public function loginnew( $data) { 
-        $sql1 = 'SELECT role_id from admin_users where password = "' .md5($data['password']). '" and user_name = "'.$data['user_name'].'"';
+        $sql1 = 'SELECT role_id from admin_users where password = "' .md5($data['password']). '" and user_name = "'.$data['user_name'].'" and access = 1';
         $query1 = $this->db->query($sql1);
         $result1 = $query1->getResultObject();
         if(!empty($result1)){

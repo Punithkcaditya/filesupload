@@ -56,6 +56,15 @@
                                             placeholder="Enter User Name - PAN No" value="" required>
                                     </div>
 
+                                    <div class="form-group">
+                                        <label class="form-label">Access</label>
+                                            <select name="access" id="access" class="form-control" data-validation="required" required>
+                                            <option value="">-- User Access --</option>
+                                            <option value="1">Enabled</option>
+                                            <option value="0">Disabled</option>
+                                            </select>
+                                    </div>
+
                                 </div>
                                 <div class="col-md-12" style="text-align: center;">
                                     <div class="d-grid gap-1">

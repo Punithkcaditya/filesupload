@@ -419,11 +419,9 @@ public function savefilesuploadedold($ssjl_files){
         if (empty($pot)) {
             return redirect()->to("/");
         }
-
         //          echo"<pre>";
         // var_dump($session->userdata["logged_session_id"], md5($user_session_id));
         // exit;
-
         $data["page_title"] =
             "Welcome - " .
             ucfirst($pot["first_name"]) .
@@ -1125,6 +1123,7 @@ public function savefilesuploadedold($ssjl_files){
                 $udata["created_date"] = date("Y-m-d");
                 $udata["created_by"] = $pot["user_id"];
                 $udata["last_active"] = date("Y-m-d");
+                $udata["access"] = $access;
                 if (!empty($password)) {
                     $udata["password"] = md5($password);
                 }
@@ -1239,6 +1238,7 @@ public function savefilesuploadedold($ssjl_files){
                     $udata["created_date"] = date("Y-m-d");
                     $udata["created_by"] = $pot["user_id"];
                     $udata["user_name"] = $user_name;
+                    $udata["access"] = $access;
                     if (!empty($password)) {
                         $udata["password"] = md5($password);
                     }
