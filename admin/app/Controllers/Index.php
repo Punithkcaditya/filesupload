@@ -61,58 +61,58 @@ class Index extends BaseController
 
             if (!empty($login_detail)) {
                 extract($this->request->getPost());
-                $checkRole = $this->admin_users_model
-                ->where("user_name", $user_name)
-                ->where("role_id", 4)
-                ->countAllResults(); 
-                if ($checkRole > 0) {   
-                $employee = $this->admin_users_model->select('user_id')->where("user_name", $user_name)
-                ->where("role_id", 4)
-                ->first();
-                 $checkCondition = $this->introductionform_model
-                ->where("ssjl_employee_id", $employee['user_id'])
-                ->where("ssjl_isapproved", 1)
-                ->where("ssjl_isdisapproved", 0)
-                ->countAllResults();
-                $checkRejected = $this->introductionform_model
-                ->where("ssjl_employee_id", $employee['user_id'])
-                ->where("ssjl_isapproved", 0)
-                ->where("ssjl_isdisapproved", 1)
-                ->countAllResults();
-                 $waitCondition = $this->introductionform_model
-                ->where("ssjl_employee_id", $employee['user_id'])
-                ->where("ssjl_isapproved", 0)
-                ->where("ssjl_isdisapproved", 0)
-                ->countAllResults();
-                $waitReapproval = $this->introductionform_model
-                ->where("ssjl_employee_id", $employee['user_id'])
-                ->where("ssjl_isapproved", 0)
-                ->where("ssjl_isdisapproved", 2)
-                ->countAllResults();
-                if($waitCondition > 0){
-                    $session->setFlashdata("warning", "Waiting For Approval");
-                    $data["session"] = $session;
-                    return redirect()->to("/");
-                }
-                if($waitReapproval > 0){
-                    $session->setFlashdata("warning", "Waiting For Re-Approval");
-                    $data["session"] = $session;
-                    return redirect()->to("/");
-                }
-                if($checkCondition == 0 &&  $checkRejected > 0){
-                    $data['userdetto'] = $this->admin_users_model->join('introduction_form'," introduction_form.ssjl_employee_id = admin_users.user_id",'inner')
-                    ->where("user_id = '{$employee['user_id']}'")
-                    ->first();
-                    return view('admin/updatedetails', $data);
-                } 
-                if($checkCondition == 0 &&  $checkRejected <= 0){
-                    //$data['employee_id'] = urlencode($employee['user_id']);
-                    $data['employee_id'] = $employee['user_id'];
-                    return view('admin/introduction', $data);
-                    //return redirect()->post("introduction", ['employee' => $data]);
-                   // return redirect()->to("introduction?employee=". $data);
-                }   
-                }
+                // $checkRole = $this->admin_users_model
+                // ->where("user_name", $user_name)
+                // ->whereIn('role_id', [4, 12, 13])
+                // ->countAllResults(); 
+                // if ($checkRole > 0) {   
+                // $employee = $this->admin_users_model->select('user_id')->where("user_name", $user_name)
+                // ->whereIn('role_id', [4, 12, 13])
+                // ->first();
+                //  $checkCondition = $this->introductionform_model
+                // ->where("ssjl_employee_id", $employee['user_id'])
+                // ->where("ssjl_isapproved", 1)
+                // ->where("ssjl_isdisapproved", 0)
+                // ->countAllResults();
+                // $checkRejected = $this->introductionform_model
+                // ->where("ssjl_employee_id", $employee['user_id'])
+                // ->where("ssjl_isapproved", 0)
+                // ->where("ssjl_isdisapproved", 1)
+                // ->countAllResults();
+                //  $waitCondition = $this->introductionform_model
+                // ->where("ssjl_employee_id", $employee['user_id'])
+                // ->where("ssjl_isapproved", 0)
+                // ->where("ssjl_isdisapproved", 0)
+                // ->countAllResults();
+                // $waitReapproval = $this->introductionform_model
+                // ->where("ssjl_employee_id", $employee['user_id'])
+                // ->where("ssjl_isapproved", 0)
+                // ->where("ssjl_isdisapproved", 2)
+                // ->countAllResults();
+                // if($waitCondition > 0){
+                //     $session->setFlashdata("warning", "Waiting For Approval");
+                //     $data["session"] = $session;
+                //     return redirect()->to("/");
+                // }
+                // if($waitReapproval > 0){
+                //     $session->setFlashdata("warning", "Waiting For Re-Approval");
+                //     $data["session"] = $session;
+                //     return redirect()->to("/");
+                // }
+                // if($checkCondition == 0 &&  $checkRejected > 0){
+                //     $data['userdetto'] = $this->admin_users_model->join('introduction_form'," introduction_form.ssjl_employee_id = admin_users.user_id",'inner')
+                //     ->where("user_id = '{$employee['user_id']}'")
+                //     ->first();
+                //     return view('admin/updatedetails', $data);
+                // } 
+                // if($checkCondition == 0 &&  $checkRejected <= 0){
+                //     //$data['employee_id'] = urlencode($employee['user_id']);
+                //     $data['employee_id'] = $employee['user_id'];
+                //     return view('admin/introduction', $data);
+                //     //return redirect()->post("introduction", ['employee' => $data]);
+                //    // return redirect()->to("introduction?employee=". $data);
+                // }   
+                // }
                 unset($login_detail["logged_session_id"]);
                 $user_session_id = rand("2659748135965", "088986555510245579");
 
@@ -249,7 +249,7 @@ class Index extends BaseController
 
                 if ($checkPan > 0) {
                      $session->setFlashdata("error", "PAN No Taken");
-                    return redirect()->to("introduction");
+                    return redirect()->to("/");
                 }
 
 

@@ -121,6 +121,7 @@ $routes->group('admin', static function ($routes) {
     $routes->get('bulkupload', 'BulkuploadController');
     $routes->get('fileupload', 'BulkuploadController::fileupload');
     $routes->get('filelistings', 'Files');
+    $routes->get('deletefile/(:any)/(:any)', 'Files::deletefile/$1/$2');
     $routes->get('downloadfile/(:any)', 'Files::downloadfiles/$1');
     $routes->match(['get', 'post'], 'BulkuploadController/upload', 'BulkuploadController::upload');
     $routes->match(['get', 'post'], 'BulkuploadController/singleupload', 'BulkuploadController::singleupload');

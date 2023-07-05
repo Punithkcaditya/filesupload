@@ -138,6 +138,7 @@ class BulkuploadController extends BaseController
             $res = $zip->open($filename);
               if ($res === true) {
                 $path = ROOTPATH . 'uploads\doc\\';
+                echo $filename;
                 $zip->open($filename, \ZipArchive::CREATE);
                 $zip->extractTo($path);
                 $zip->close();
@@ -145,9 +146,6 @@ class BulkuploadController extends BaseController
                 rmdir($oldfolder);
                 unlink($filename);
               }
-    
-
-  
             $this->session->setFlashdata('success',"File Uploaded successfully.");  
         } else {
             $this->session->setFlashdata('error',"failed to upload $filename!");            

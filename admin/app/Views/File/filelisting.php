@@ -9,7 +9,34 @@
 					
 							</div>
 						</div>
+
+
+					<div class="row">
+					<div class="col-lg-12">
+					<?= $this->include('message/message') ?>
+					</div>
+					</div>
+
 						<div class="row">
+							<?php if(isset($admin_users)) {?>
+						<div class="col-md-6 col-sm-12">
+						<div class="form-group">
+						<select name="admin_users" name="admin_users" id="admin_users" class="form-control" required>
+						<option value="">-- Choose Employee
+						</option>
+						<?php foreach ($admin_users as $rowdata): ?>
+						<option value="<?php echo $rowdata['user_name'] ?>" <?php echo ((!empty($rowdata['user_name']) && isset($_GET['user_name'])) && $rowdata['user_name'] == $_GET['user_name']) ? 'selected' : '' ?>>
+						<?php echo $rowdata['first_name'] .'-'. $rowdata['first_name'] ?>
+						</option>
+						<?php endforeach;?>
+						</select>
+						</div>
+						</div>
+						<div class="col-md-6  d-sm-none">
+						<div class="form-group mt-3">
+						</div>
+						</div>
+						<?php } ?>
 							<div class="col-md-12">
 								<div class="card shadow">
 									<div class="card-header">
@@ -28,6 +55,7 @@
 												<tbody>
 
 													<?php
+													$username = $_GET['user_name'] ? $_GET['user_name'] : '';
 													if ($fileNames) {
                                                     $i = 0;
 														foreach ($fileNames as $key): ?>
@@ -36,7 +64,10 @@
 															<td><?=$key?></td>
 															<td>
                                                             <a href="<?= base_url('downloadfile/'.$key) ?>" class="mx-2 text-decoration-none text-primary"><i class="fa fa-download"></i></a>
-															</td>
+                                                            <?php if(isset($admin_users)) {?>
+															<a href="<?= base_url('deletefile/'.$key.'/'.$username) ?>" class="mx-2 text-decoration-none text-danger" onclick="if(confirm('Are you sure to delete  - <?= $key ?> from list?') !== true) event.preventDefault()"><i class="fa fa-trash"></i></a>
+															<?php } ?>	
+														</td>
 														</tr>
 													<?php endforeach;
 													} else {?>
@@ -54,3 +85,20 @@
 						</div>
 
 					</div>
+
+
+<script>
+$(document).ready(function() {
+var selectEl = $('select[name="admin_users"]');
+var currentVal = selectEl.val(); // initialize current value
+
+selectEl.on('change', function() {
+var selectedVal = $(this).val();
+if(selectedVal && selectedVal !== currentVal) { // check if value has changed
+currentVal = selectedVal; // update current value
+window.location.href = 'filelistings?user_name=' + selectedVal; // update URL
+}
+});
+});
+
+</script>

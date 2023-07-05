@@ -48,8 +48,27 @@ class Files extends BaseController
         $this->loadUser();
         $session = session();
         $pot = json_decode(json_encode($session->get("userdata")), true);
+        if(empty($pot )){  return redirect()->to("/");}
+        if(isset($pot['role_id']) && $pot['role_id']==1){
+            $data['admin_users'] =  $this->admin_users_model
+            ->orderBy("user_id", "ASCE")
+            ->findAll();
+        }
+        if(isset($_GET['user_name']) && !empty($_GET['user_name'])){
+            $user_name = $_GET['user_name'];
+            // $directory = '/admin\uploads\doc/*'; 
+             $directory = ROOTPATH . 'uploads/doc/*';
+            $filenames = glob($directory);
+            foreach ($filenames as $filename) {
+                $file = basename($filename); 
+                if (str_contains($file, $user_name)) {
+                    $fileNames[]= $file;
+                }
+            }
+        }
         $employee_id = $pot['employee_id'];
         // $directory = '/admin\uploads\doc/*'; 
+
          $directory = ROOTPATH . 'uploads/doc/*';
         $filenames = glob($directory);
       
@@ -59,7 +78,6 @@ class Files extends BaseController
                 $fileNames[]= $file;
             }
         }
-          
         $data['fileNames'] = isset($fileNames) ? $fileNames : 0 ;
         $data['session'] = $session;
         $data['title'] = 'Download Files';
@@ -76,6 +94,7 @@ class Files extends BaseController
             ->request
             ->uri
             ->getSegment(1);
+
         $data["view"] = "File/filelisting";
         return view('templates/default', $data);
     }
@@ -96,8 +115,31 @@ class Files extends BaseController
         throw \CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound();
         }
         // Set the file path
-        $path = ROOTPATH . 'uploads/doc/' . $filename;;
+        $path = ROOTPATH . 'uploads/doc/' . $filename;
+        print_r($filename);
+        exit;
         return $this->response->download($path, null);
+}
+
+public function deletefile($filename = '', $username= ''){
+    $this->loadUser();
+        $session = session();
+        $pot = json_decode(json_encode($session->get("userdata")), true);
+        if (empty($pot)) {
+            return redirect()->to("/");
+        }
+        helper('file');
+        if (!file_exists(ROOTPATH . 'uploads/doc/' . $filename)) {
+            throw \CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound();
+        }
+        $file_path = ROOTPATH . 'uploads/doc/' . $filename;
+
+        if (unlink($file_path)) {
+            $this->session->setFlashdata('success',"File deleted successfully.");  
+        } else {
+            $this->session->setFlashdata('error',"Failed to delete $filename!"); 
+        }
+        return redirect()->to('filelistings?user_name='.$username);
 }
 
 

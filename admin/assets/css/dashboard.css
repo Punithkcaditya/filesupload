@@ -1059,13 +1059,15 @@ textarea.form-control {
 	.navbar-sm-search .navbar-search.form-inline{
 		display:block !important;
 	}
-	.main-content .navbar-top{
+	/* .main-content .navbar-top{
 		top:55px !important;
-	}
+	} */
 	.navbar-sm-search{
 		background:#fff;
 	}
 }
+
+
 
 @media (min-width: 576px) {
 	.form-inline label {
@@ -11429,3 +11431,10 @@ canvas{
 .form-control.error{
 	border: 1px solid #dd1115 !important;
   }
+
+
+  @media (max-width: 576px){
+	.navbar-nav .dropdown-menu {
+		margin-right: -8em !important;
+	}
+	}
