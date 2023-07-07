@@ -49,7 +49,9 @@ $routes->get('/', 'Auth::index', ['filter' => 'authenticated']);
 // });
 
 $routes->group('admin', static function ($routes) {
+    $routes->get('forgotpassword', 'Auth::forgotpassword', ['filter' => 'authenticated']);
     $routes->match(['post'], 'dashboard', 'Index::index');
+    $routes->match(['post'], 'updatepassword', 'Index::updatepassword');
     $routes->match(['post'], 'savenewroles', 'Index::savenewroles');
     $routes->match(['post'], 'editnewroles', 'Index::editnewroles');
     $routes->get('Admindashboard', 'Index::dashboard');

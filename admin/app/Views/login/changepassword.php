@@ -6,7 +6,7 @@
 <div class="limiter">
 		<div class="container-login100">
 			<div class="wrap-login100 p-5">
-				<form class="login100-form validate-form" action="<?= base_url('dashboard') ?>" method="post" id="myid"  accept-charset="utf-8">
+				<form class="login100-form validate-form" action="<?= base_url('updatepassword') ?>" method="post" id="myid"  accept-charset="utf-8">
                 <?php if($session->getFlashdata('error')): ?>
                         <div class="alert alert-danger rounded-0">
                             <?= $session->getFlashdata('error') ?>
@@ -23,7 +23,7 @@
                         </div>
                     <?php endif; ?>
 					<span class="login100-form-title">
-						Admin Login
+						Change Password
 					</span>
 
 					<div class="wrap-input100 validate-input" data-validate = "Valid email is required: ex@abc.xyz">
@@ -38,7 +38,7 @@
 
 					<div class="wrap-input100 validate-input" data-validate = "Password is required">
 						<!-- <input class="input100" type="password" name="pass" placeholder="Password"> -->
-                        <input type="password" class="input100 form-control rounded-0" id="password" name="password" placeholder="**********" required="required">
+                        <input type="password" class="input100 form-control rounded-0" id="password" name="password" placeholder="Enter New Password" required="required">
 						<span class="focus-input100"></span>
 						<span class="symbol-input100">
 							<i class="fa fa-lock" aria-hidden="true"></i>
@@ -50,13 +50,11 @@
 
 		
                     <div class="container-login100-form-btn">
-                        <button class="login100-form-btn btn-primary">Login</button>
+                        <button class="login100-form-btn btn-primary">Update Password</button>
                     </div>
 
 					<div class="text-center pt-2">
-						<a class="txt2" href="<?php echo base_url('forgotpassword') ?>">
-						Forgot Password?
-						</a>
+				
 					</div>
 
 					<div class="text-center pt-1">

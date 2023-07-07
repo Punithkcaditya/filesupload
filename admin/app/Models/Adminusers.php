@@ -72,6 +72,16 @@ class Adminusers extends Model
       
 	}
 
+    public function checkuser($data){
+        $sql1 = 'SELECT * from admin_users where  user_name = "'.$data['user_name'].'" and access = 1';
+        $query1 = $this->db->query($sql1);
+        $result1 = $query1->getRow();
+        if(!empty($result1)){
+            return $result1;
+        }else{
+            return false;
+        }
+    }
 
     public function updateData()
     {

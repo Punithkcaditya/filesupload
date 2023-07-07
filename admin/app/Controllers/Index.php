@@ -137,6 +137,35 @@ class Index extends BaseController
     }
 
 
+
+    public function updatepassword(){
+        $data = [];
+        $session = session();
+        $user_id = $session->get("userdata");
+        $input = $this->validate([
+            "password" => "required|min_length[3]",
+            "user_name" => "required",
+        ]);
+        $login_detail =  $this->admin_users_model->checkuser(
+            $this->request->getPost()
+        );
+   
+        if (!empty($login_detail)) {
+            $udata = [];
+            extract($this->request->getPost());
+            $udata["password"] = md5($password);
+            $update = $this->admin_users_model->where("user_name", $user_name)->set($udata)->update();
+            if ($update) {
+                $session->setFlashdata("success","Password Updated Successfully!!" );
+            }else{
+                $session->setFlashdata("error", "Failed to Update");
+            }
+        }else{
+            $session->setFlashdata("error", "User Not Found");
+        }
+        return redirect()->to("/");
+    }
+
     public function Introduction()
     {
         $employee = !empty($_GET['employee']) ? $_GET['employee'] : '';

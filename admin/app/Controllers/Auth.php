@@ -32,6 +32,20 @@ class Auth extends BaseController
         return view('templates/defaultv2', $data);
     }
    
+    public function forgotpassword(){
+        $session = session();
+        $data=[];
+        $data['page_title']="Login";
+        $logged_in = $session->get("userdata");
+        if($logged_in)
+        {
+            return redirect()->to("Admindashboard");
+        }
+        $data['session'] = $session;
+        $data['view'] = 'login/changepassword';
+        $data['title'] = 'Login Page - ' . SITE_TITLE;
+        return view('templates/defaultv2', $data);
+    }
 
     public function logout(){
         $session = session();
